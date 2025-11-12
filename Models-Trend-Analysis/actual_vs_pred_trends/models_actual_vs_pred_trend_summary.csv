@@ -1,0 +1,6 @@
+model,n_obs,slope_actual_per_year,pval_actual,interpretation_actual,slope_pred_per_year,pval_pred,interpretation_pred,slope_bias_per_year,pval_bias,interpretation_bias
+RandomForest,61,-0.24123072668852463,0.5638100913064319,"decreasing, not significant",0.005248389868302542,0.9838101317589363,"increasing, not significant",0.2464791165568273,0.32563054524991275,"increasing, not significant"
+GradientBoosting,61,-0.24123072668852463,0.5638100913064319,"decreasing, not significant",0.3241018961252449,0.25833237977493195,"increasing, not significant",0.5653326228137695,0.036051809031738845,"increasing, significant"
+Lasso,61,-0.24123072668852463,0.5638100913064319,"decreasing, not significant",-0.12371521761616863,0.6334222197107545,"decreasing, not significant",0.11751550907235608,0.6601588011337761,"increasing, not significant"
+Ridge,61,-0.24123072668852463,0.5638100913064319,"decreasing, not significant",-0.08824494900650551,0.7327548831953208,"decreasing, not significant",0.15298577768201926,0.5696741308935207,"increasing, not significant"
+LSTM,59,0.3443754734167152,0.42899792622268873,"increasing, not significant",0.04498966990064286,0.8868092920278188,"increasing, not significant",-0.29938580351607236,0.38668573418943564,"decreasing, not significant"
