@@ -1,6 +1,0 @@
-Model,Slope_per_year,p_value,Interpretation
-RandomForest,0.005248389868302542,0.9838101317589363,"increasing, not significant"
-GradientBoosting,0.3241018961252449,0.25833237977493195,"increasing, not significant"
-Lasso,-0.12371521761616863,0.6334222197107545,"decreasing, not significant"
-Ridge,-0.08824494900650551,0.7327548831953208,"decreasing, not significant"
-LSTM,0.04498966990064286,0.8868092920278188,"increasing, not significant"
