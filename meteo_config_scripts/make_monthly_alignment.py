@@ -21,7 +21,7 @@ import json
 import sys
 
 ROOT = Path(".")
-DATA_DIR = ROOT / "Datasets"
+DATA_DIR = ROOT / "meteo_data"
 OUT_DIR = DATA_DIR
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 

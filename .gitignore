@@ -133,6 +133,7 @@ Thumbs.db
 # *.png
 # *.jpg
 # *.jpeg
+*.docx
 
 # Logs
 *.log

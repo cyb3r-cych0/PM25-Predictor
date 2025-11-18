@@ -4,15 +4,13 @@ This directory contains Python scripts for generating visualizations and plots r
 
 ## 📘 Purpose
 
-These scripts produce **diagnostic and comparative figures** to evaluate model accuracy, trends, and biases. They create plots for time series, actual vs. predicted values, trend analyses, and supplementary visualizations, aiding in the interpretation of model results.
+These scripts produce **diagnostic and comparative figures** to evaluate model accuracy, trends, ci and biases. They create plots for time series, actual vs. predicted values, trend analyses, and supplementary visualizations, aiding in the interpretation of model results.
 
 ## 🗂️ Contents
 
-| File | Description | Output |
-|------|-------------|--------|
-| \models_actual_vs_pred_trends_plots.py\ | Main script for generating trend plots comparing actual vs. predicted PM₂.₅ over time | Produces PNG files in \plot_figures/\ (e.g., actual vs. pred trends for each model) |
-| \models_pred_vs_obs_supp_plots.py\ | Supplementary plotting script for additional diagnostics | Generates supplementary figures like grid plots and individual model plots |
-| \classP.py\ | Utility class or module for plotting functions | Provides reusable plotting classes or functions for consistency |
+`models_actual_vs_pred_trends_plots.py` | Main script for generating trend plots comparing actual vs. predicted PM₂.₅ over time | Produces PNG files in \plot_figures/\ (e.g., actual vs. pred trends for each model) |
+`models_pred_vs_obs_supp_plots.py`| Supplementary plotting script for additional diagnostics | Generates supplementary figures like grid plots and individual model plots |
+
 
 ## ⚙️ Usage
 
