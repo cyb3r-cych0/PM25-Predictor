@@ -15,7 +15,7 @@ import math
 
 ROOT = Path(".")
 PIPE = ROOT / "models_pipeline_data"
-OUT = ROOT / "plot_figures"
+OUT = ROOT / "plot_figures" / "pred_vs_obs_plots"
 OUT.mkdir(parents=True, exist_ok=True)
 
 MODELS = ["Ridge", "Lasso", "RandomForest", "GradientBoosting", "MLR", "LSTM"]
@@ -125,8 +125,8 @@ def plot_single_model(model, df, outpath, title_extra=None, xlim=(4.5,25.5), yli
 
     ax.set_xlim(xlim)
     ax.set_ylim(ylim)
-    ax.set_xlabel("MERRA-2 PM2.5 (µg/m³)")
-    ax.set_ylabel("Predicted PM2.5 (µg/m³)")
+    ax.set_xlabel("MERRA-2 PM₂.₅ (µg/m³)")
+    ax.set_ylabel("Predicted PM₂.₅ (µg/m³)")
     panel = PANEL_LABELS.get(model, "")
     ax.set_title(f"{panel} {model} Model")
     ax.grid(alpha=0.25, linestyle=":")
@@ -139,10 +139,12 @@ def plot_single_model(model, df, outpath, title_extra=None, xlim=(4.5,25.5), yli
 # ---- combined 2x3 grid ----
 def plot_combined_grid(model_dfs, outpath, order=GRID_ORDER):
     n = 6
-    cols = 2; rows = 3
+    cols = 2
+    rows = 3
     fig, axes = plt.subplots(rows, cols, figsize=(10,14))
     axes = axes.flatten()
-    xlim=(4.5,25.5); ylim=(4,26)
+    xlim=(4.5,25.5)
+    ylim=(4,26)
     for i, model in enumerate(order):
         ax = axes[i]
         df = model_dfs.get(model)
@@ -155,10 +157,10 @@ def plot_combined_grid(model_dfs, outpath, order=GRID_ORDER):
         stats = stats_from_series(y_true, y_pred)
         ax.scatter(y_true, y_pred, s=20, alpha=0.8, edgecolor='none')
         xr = np.array(xlim)
-        ax.plot(xr, xr, ls='--', color='k', lw=1.2)
+        ax.plot(xr, xr, ls='--', color='k', lw=1.2, label="1:1 ref")
         if not np.isnan(k):
             xs = np.linspace(xlim[0], xlim[1], 200)
-            ax.plot(xs, k*xs, color='#d62728', lw=1.8)
+            ax.plot(xs, k*xs, color='#d62728', lw=1.8, label="Weighted fit (no intercept)")
         # small box
         slope_txt = f"Slope = {k:+.2f} ± {k_se:.2f}" if not np.isnan(k) else "Slope = n/a"
         lines = [slope_txt]
@@ -167,12 +169,14 @@ def plot_combined_grid(model_dfs, outpath, order=GRID_ORDER):
         txt = "\n".join(lines)
         ax.text(0.02, 0.98, txt, transform=ax.transAxes, va='top', ha='left', fontsize=9,
                 bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.6))
-        ax.set_xlim(xlim); ax.set_ylim(ylim)
+        ax.set_xlim(xlim)
+        ax.set_ylim(ylim)
         panel = PANEL_LABELS.get(model, "")
         ax.set_title(f"{panel} {model} Model", fontsize=11)
-        ax.set_xlabel("MERRA-2 PM2.5 (µg/m³)")
-        ax.set_ylabel("Predicted PM2.5 (µg/m³)")
+        ax.set_xlabel("MERRA-2 PM₂.₅ (µg/m³)")
+        ax.set_ylabel("Predicted PM₂.₅ (µg/m³)")
         ax.grid(alpha=0.2, linestyle=":")
+        ax.legend(loc='lower right', fontsize=8)
     # hide any extra axes
     for j in range(len(order), rows*cols):
         axes[j].set_visible(False)
@@ -197,11 +201,11 @@ for model in MODELS:
     df = df.astype(float)
     model_dfs[model] = df
     # single model file output (like example)
-    outfile = OUT / f"supplementary_{model}.png"
+    outfile = OUT / f"{model}_pred_vs_obs_(MERRA-2).png"
     plot_single_model(model, df, outfile)
-
+    
 # combined grid
-combined_out = OUT / "supplementary_combined_grid.png"
+combined_out = OUT / "Grid_models_pred_vs_obs_(MERR-2).png"
 plot_combined_grid(model_dfs, combined_out, order=GRID_ORDER)
 
 print("All done. Files saved to:", OUT)

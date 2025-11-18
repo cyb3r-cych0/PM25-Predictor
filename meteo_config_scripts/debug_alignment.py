@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 
 ROOT = Path(".")
-DATA_DIR = ROOT / "Datasets"
+DATA_DIR = ROOT / "meteo_data"
 
 FILES = {
     "pm25": DATA_DIR / "Total-Surface-Mass-Concentration-PM2.5.csv",

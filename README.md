@@ -106,10 +106,9 @@ PM25-Predictor/
 ├── LICENSE                            # Project license
 ├── .gitignore                         # Git ignore rules
 ├── requirements.txt                   # Python dependencies
-├── TODO.md                            # Task list for updates
 ├── models_pipeline.py                 # Main pipeline script for training models
 │
-├── config_scripts/                    # Configuration and alignment scripts
+├── ,eteo_config_scripts/               # Configuration and alignment scripts
 │   ├── README.md                      # Documentation for config scripts
 │   ├── make_monthly_alignment.py      # Script for aligning data to monthly frequency
 │   └── debug_alignment.py             # Debugging script for data alignment
@@ -117,8 +116,8 @@ PM25-Predictor/
 ├── meteo_data/                        # Raw meteorological and PM₂.₅ data
 │   ├── README.md                      # Documentation for datasets
 │   ├── *.csv                          # Raw data files (8 meteorological + PM₂.₅)
-│   ├── align_to_monthly.py            # Data alignment script
-│   ├── aligned_monthly_*.csv          # Processed aligned datasets
+│   ├── align_to_monthly_inner.csv     # Inner Join alignment
+│   ├── aligned_monthly_outer.csv      # Outer Join alignment
 │   ├── alignment_report.json          # Alignment report
 │   └── Total-Surface-Mass-Concentration-PM2.5.csv  # Target variable
 │
@@ -136,16 +135,14 @@ PM25-Predictor/
 ├── plot_scripts/                      # Scripts for generating plots
 │   ├── README.md                      # Documentation for plotting scripts
 │   ├── models_actual_vs_pred_trends_plots.py  # Main trend plotting script
-│   ├── models_pred_vs_obs_supp_plots.py       # Supplementary plotting script
-│   └── classP.py                      # Plotting utility class
+│   ├── models_pred_vs_obs_supp_plots.py       # Prediction vs observation plotting script
+│   └── models_bias_trend_timeseries.py        # Bias trend analysis script
 │
 └── plot_figures/                      # Generated figures and plots
     ├── README.md                      # Documentation for figures
-    ├── 01_*_actual_vs_pred_trends.png # Individual model trend plots
-    ├── combined_models_*.png          # Combined model comparisons
-    ├── supplementary_*.png            # Supplementary diagnostic plots
-    └── *.png      
-                        # Various generated PNG files
+    ├── actual_vs_pred_trends_plots/   # Model trend plots
+    ├── bias_trend_plots/              # Model bias plots
+    ├── pred_vs_obs_plots/             # Model observation plots  
 
 ### 📊 Results
 Key Metrics (Example)
@@ -162,7 +159,6 @@ Outputs
 Time Series Plots: Actual PM₂.₅ vs. model predictions over 2000–2025.
 Trend Comparisons: Bar charts showing annual slopes for actual vs. predicted trends.
 Diagnostic Figures: Bias trends, rolling MAE, and multi-model summaries.
-CSVs: Prediction files, trend summaries, and significance tables.
 Trends are expressed in µg·m⁻³·yr⁻¹ with p-values indicating statistical significance (p < 0.05).
 
 ## 🤝 Contributing
