@@ -134,6 +134,7 @@ Thumbs.db
 # *.jpg
 # *.jpeg
 *.docx
+*.pdf
 
 # Logs
 *.log
