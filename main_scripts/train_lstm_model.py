@@ -14,19 +14,11 @@ from main_scripts.dir_config import DirConfig
 from main_scripts.plot import PlotPredVsActual
 from main_scripts.trend_computation import TrendComputation
 
-class TrainLSTMModel:
-    def __init__(self, 
-                 trend_obj=TrendComputation(), 
-                 dir_obj=DirConfig().get_models_pipe_path(), 
-                 plot_obj=PlotPredVsActual(),
-                 seed=42,
-                 LSTM_LOOKBACK = 12,
-                 LSTM_EPOCHS = 150,
-                 LSTM_BATCH = 16):
+class TrainLSTMModel(DirConfig):
+    def __init__(self, seed=42, LSTM_LOOKBACK = 12, LSTM_EPOCHS = 150, LSTM_BATCH = 16):
+        super().__init__()
         
-        self.trend_obj = trend_obj
-        self.pipe_path = dir_obj
-        self.plot_obj = plot_obj
+        self.models_dir = super().models_dir_path()
         self.seed = seed
         self.LSTM_LOOKBACK = LSTM_LOOKBACK
         self.LSTM_EPOCHS = LSTM_EPOCHS
@@ -70,7 +62,7 @@ class TrainLSTMModel:
         ])
         model.compile(optimizer="adam", loss="mse")
 
-        ckpt = self.pipe_path / "lstm_best.h5"
+        ckpt = self.models_dir / "lstm_best.h5"
         es = EarlyStopping(patience=12, restore_best_weights=True)
         mc = ModelCheckpoint(ckpt, save_best_only=True)
 
@@ -78,8 +70,8 @@ class TrainLSTMModel:
                 epochs=self.LSTM_EPOCHS, batch_size=self.LSTM_BATCH,
                 callbacks=[es, mc], verbose=0)
         
-        joblib.dump(scX, self.pipe_path / "lstm_scaler_X.joblib")
-        joblib.dump(scY, self.pipe_path / "lstm_scaler_y.joblib")
+        joblib.dump(scX, self.models_dir / "lstm_scaler_X.joblib")
+        joblib.dump(scY, self.models_dir / "lstm_scaler_y.joblib")
 
         # ---- TEST predictions ----
         preds_scaled = model.predict(X_te).ravel()
@@ -87,8 +79,8 @@ class TrainLSTMModel:
         y_test_real = scY.inverse_transform(y_te.reshape(-1,1)).ravel()
 
         df_test = pd.DataFrame({"y_true": y_test_real, "y_pred": preds}, index=idx_te)
-        df_test.to_csv(self.pipe_path / "LSTM_TEST_predictions.csv")
-        self.plot_obj.plot_pred_vs_actual(df_test, "LSTM_TEST")
+        df_test.to_csv(self.models_dir / "LSTM_TEST_predictions.csv")
+        PlotPredVsActual().plot_pred_vs_actual(df_test, "LSTM_TEST")
 
         # ---- FULL RANGE predictions ----
         X_full, _, idx_full, scX, scY = self.prepare_lstm_sequences(df_lag)
@@ -97,8 +89,8 @@ class TrainLSTMModel:
         y_full = df_lag["pm25"].iloc[self.LSTM_LOOKBACK:]
 
         df_full = pd.DataFrame({"y_true": y_full.values, "y_pred": full_pred}, index=idx_full)
-        df_full.to_csv(self.pipe_path / "LSTM_FULL_predictions_2000_2025.csv")
-        self.plot_obj.plot_pred_vs_actual(df_full, "LSTM_FULL")
-        self.trend_obj.save_trend_summary("LSTM", df_full)
+        df_full.to_csv(self.models_dir / "LSTM_FULL_predictions_2000_2025.csv")
+        PlotPredVsActual().plot_pred_vs_actual(df_full, "LSTM_FULL")
+        TrendComputation().save_trend_summary("LSTM", df_full)
         return df_full
     

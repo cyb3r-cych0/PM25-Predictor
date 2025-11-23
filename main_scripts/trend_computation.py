@@ -5,10 +5,10 @@ import pandas as pd
 from scipy.stats import linregress
 from main_scripts.dir_config import DirConfig
 
-class TrendComputation:
-    """A class to compute trends in time series data."""
-    def __init__(self, pipe_path=DirConfig().get_models_pipe_path()):
-        self.pipe_path = pipe_path
+class TrendComputation(DirConfig):
+    def __init__(self):
+        super().__init__()
+        self.models_dir = super().models_dir_path()
 
     def compute_trend(self, series):
         idx = pd.to_datetime(series.index)
@@ -31,6 +31,6 @@ class TrendComputation:
             "pval_bias": p_b,
             "n_obs": len(df_full)
         }
-        pd.DataFrame([out]).to_csv(self.pipe_path / f"{name}_trend_summary_FULL.csv", index=False)
+        pd.DataFrame([out]).to_csv(self.models_dir / f"{name}_trend_summary_FULL.csv", index=False)
         return out
     

@@ -5,14 +5,11 @@ import pandas as pd
 
 class DateParser:
     def __init__(self, 
-                 date_formats=
-                 [
-                     "%Y-%m-%d", 
-                     "%Y-%m-%d %H:%M:%S", 
-                     "%d/%m/%Y", 
-                     "%d/%m/%Y %H:%M", 
-                     "%d/%m/%Y %H:%M:%S"
-                ],
+                 date_formats=[ "%Y-%m-%d", 
+                                "%Y-%m-%d %H:%M:%S", 
+                                "%d/%m/%Y", 
+                                "%d/%m/%Y %H:%M", 
+                                "%d/%m/%Y %H:%M:%S"],
                  lags=[1,2,3,12]
                  ):
         self.date_formats = date_formats

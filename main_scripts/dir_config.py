@@ -2,25 +2,25 @@
 # DIRECTORY CONFIG
 # ============================================================
 from pathlib import Path
-import pandas as pd
 
 class DirConfig:
-    """
-    A class to manage data paths and loading for PM2.5 prediction models.
-    """
-    def __init__(self, root_dir=Path("."), models_dir_name="models_pipeline_output", meteo_dir_name="meteo_data"):
-        self.ROOT = root_dir
-        self.METEO_DIR = self.ROOT / meteo_dir_name
-        self.PIPE_DIR = self.ROOT / models_dir_name
+    def __init__(self, 
+                 root_dir=Path("."), 
+                 models_dir_name="models_pipeline_output", 
+                 meteo_dir_name="meteo_data",
+                 plots_dir_name="plot_figures"
+                 ):
+        self.root = root_dir
+        self.meteo_dir = self.root / meteo_dir_name
+        self.models_dir = self.root / models_dir_name
+        self.plots_dir = self.root / plots_dir_name
 
     def get_meteo_path(self, filename):
-        """Constructs the full path to a meteo csv files."""
-        path = self.METEO_DIR / filename
+        path = self.meteo_dir / filename
         return path
     
     def load_meteo_data(self):
-        """Loads a CSV meteorological data files."""
-        meteo_path = self.METEO_DIR
+        meteo_path = self.meteo_dir
         if meteo_path.exists():
             meteo_csv_files = {
                 "pm25": self.get_meteo_path("Total-Surface-Mass-Concentration-PM2.5.csv"),
@@ -35,10 +35,15 @@ class DirConfig:
             return meteo_csv_files
         else:
             raise FileNotFoundError(f"Meteorological data files not found. Check the directory: {meteo_path}")
-
-    def get_models_pipe_path(self):
-        """Constructs the full path to a model's pipeline data dir."""
-        pipe_dir = self.PIPE_DIR 
-        pipe_dir.mkdir(parents=True, exist_ok=True)
-        path = pipe_dir
+        
+    def plots_dir_path(self):
+        plots_dir = self.plots_dir
+        plots_dir.mkdir(parents=True, exist_ok=True)
+        path = plots_dir
+        return path
+            
+    def models_dir_path(self):
+        models_dir = self.models_dir 
+        models_dir.mkdir(parents=True, exist_ok=True)
+        path = models_dir
         return path
