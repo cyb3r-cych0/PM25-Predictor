@@ -43,26 +43,27 @@ This enables robust evaluation of model performance in capturing PM₂.₅ trend
 ## 🛠️ Installation
 
 ### Prerequisites
+
 - Python 3.12 - tensorflow compatible
 - Git
 
 ### Setup
 1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd PM25-Predictor
-Create a virtual environment (recommended):
 
+`git clone [<repository-url>](https://github.com/cyb3r-cych0/PM25-Predictor.git)`
+`cd PM25-Predictor`
 
-python -m venv airpoll_env
-airpoll_env\Scripts\activate  # On Windows
-# source airpoll_env/bin/activate  # On macOS/Linux
-Install dependencies:
+2. Create a virtual environment (recommended):
 
+`python -m venv airpoll_env`
+`airpoll_env\Scripts\activate`  # On Windows
+`source airpoll_env/bin/activate`  # On macOS/Linux
 
-pip install -r requirements.txt
-Dependencies
-Key packages include:
+3. Install dependencies:
+
+`pip install -r requirements.txt`
+
+- Dependencies - Key packages include:
 
 `pandas, numpy: Data manipulation`
 `scikit-learn: ML models (Random Forest, Gradient Boosting, Lasso, Ridge, MLR)`
@@ -72,31 +73,36 @@ Key packages include:
 `joblib: Model serialization`
 
 ### 🚀 Usage
-Quick Start Workflow
-Prepare Data:
 
+#### Quick Start Workflow
 
-cd meteo_data
-python align_to_monthly.py
-This merges 8 CSV files into aligned_monthly_outer_interp.csv (307 monthly observations).
+**Prepare Data:**
 
-Train Models & Compute Trends:
+`cd meteo_data`
+`python align_to_monthly.py`
 
+This merges 8 CSV files into `aligned_monthly_inner.csv` and `aligned_monthly_outer.csv` (307 monthly observations).
 
-cd ..
-python models_pipeline.py
+**Train Models & Compute Trends:**
+
+`cd ..`
+`python models_pipeline.py`
+
 This trains all 6 models (Random Forest, Gradient Boosting, Lasso, Ridge, MLR, LSTM), computes trends, and saves outputs.
 
-Generate Figures:
+**Generate Figures:**
 
+`python /plot_scripts/models_actual_vs_pred_trends_plots.py`
+`python /plot_scripts/models_pred_vs_obs_supp_plots.py`
+`python /plot_scripts/models_bias_trend_timeseries.py`
 
-cd plot_scripts
-python models_actual_vs_pred_trends_plots.py
-python models_pred_vs_obs_supp_plots.py
-Output Locations
-Figures: plot_figures/ (time series, trend bars, composites)
-Model Outputs: models_pipeline_data/ (saved models, predictions, metrics, trend summaries)
-Aligned Data: meteo_data/aligned_monthly_outer_interp.csv
+This generates plots and visualizations of models actual, predicted and residuals.
+
+**Output Locations**
+
+Figures: `plot_figures/` (time series, trend bars, residuals)
+Model Outputs: `models_pipeline_data/` (saved models, predictions, metrics, trend summaries)
+Aligned Data: `meteo_data/aligned_monthly_inner_interp.csv` and `meteo_data/aligned_monthly_outer_interp.csv` (aligned to monthly datasets)
 
 ### 📁 Project Structure
 
@@ -107,8 +113,9 @@ PM25-Predictor/
 ├── .gitignore                         # Git ignore rules
 ├── requirements.txt                   # Python dependencies
 ├── models_pipeline.py                 # Main pipeline script for training models
+|__ PM₂.₅ Modeling Pipeline Flowchart.png  # Models Pipeline Flowchart 
 │
-├── ,eteo_config_scripts/               # Configuration and alignment scripts
+├── meteo_config_scripts/              # Configuration and alignment scripts
 │   ├── README.md                      # Documentation for config scripts
 │   ├── make_monthly_alignment.py      # Script for aligning data to monthly frequency
 │   └── debug_alignment.py             # Debugging script for data alignment
