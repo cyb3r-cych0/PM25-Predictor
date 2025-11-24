@@ -35,6 +35,10 @@ class DirConfig:
             return meteo_csv_files
         else:
             raise FileNotFoundError(f"Meteorological data files not found. Check the directory: {meteo_path}")
+    
+    def meteo_config_scripts_path(self):
+        path = self.meteo_dir
+        return path
         
     def plots_dir_path(self):
         plots_dir = self.plots_dir
